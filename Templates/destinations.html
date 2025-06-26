@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Destinations - Travel Explorer</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .destination {
+      border: 1px solid #ccc;
+      margin: 10px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .destination img {
+      width: 75%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .destination button {
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .destination button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="flights.html">Flights</a></li>
+      <li><a href="hotels.html">Hotels</a></li>
+      <li><a href="destinations.html">Destinations</a></li>
+      <li><a href="contact.html">Support</a></li>
+      <li><a href="support.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <h1>Top Destinations</h1>
+  <div id="destinations"></div>
+
+  <script>
+    const destinations = [
+      { name: "Goa", image: "https://www.tourmyindia.com/socialimg/best-time-visit-goa.jpg", description: "Relax on sunny beaches.", link: "goa.html" },
+      { name: "Shimla", image: "http://www.manahotels.in/traveller/wp-content/uploads/2013/11/shimla.jpg", description: "Enjoy cold hills and snow.", link: "shimla.html" },
+      { name: "Jaipur", image: "https://miro.medium.com/max/3200/1*idBbkSkH4nXVIhDbA5QBEw.jpeg", description: "Explore royal heritage.", link: "jaipur.html" }
+    ];
+
+    const destDiv = document.getElementById("destinations");
+    destinations.forEach(dest => {
+      const div = document.createElement("div");
+      div.className = "destination";
+      div.innerHTML = `
+        <img src="${dest.image}" alt="${dest.name}">
+        <h3>${dest.name}</h3>
+        <p>${dest.description}</p>
+        <a href="${dest.link}"><button>Explore</button></a>
+      `;
+      destDiv.appendChild(div);
+    });
+  </script>
+</body>
+</html>

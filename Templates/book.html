@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Flight</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+    form {
+      max-width: 400px;
+      margin: auto;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+  </style>
+
+  <!-- ✅ Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <h2>Flight Booking Form</h2>
+  <form id="bookingForm">
+
+    <label>Full Name</label>
+    <input type="text" name="fullName" required />
+
+    <label>Email</label>
+    <input type="email" name="email" required />
+
+    <label>Phone Number</label>
+    <input type="tel" name="phone" required />
+
+    <label>Seats</label>
+    <input type="number" name="seats" min="1" max="10" required />
+
+    <button type="submit">Confirm Booking</button>
+  </form>
+
+  <script>
+    // ✅ Firebase Config from your Firebase project
+    const firebaseConfig = {
+      apiKey: "AIzaSyAyjukqWC5XPsdD-n9Q71e8187GLJhKprQ",
+      authDomain: "travel-37da4.firebaseapp.com",
+      projectId: "travel-37da4",
+      storageBucket: "travel-37da4.appspot.com",
+      messagingSenderId: "153807731116",
+      appId: "1:153807731116:web:dd086a3091e43568c32209",
+      measurementId: "G-GTGD6VFZ9X"
+    };
+
+    // ✅ Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // ✅ Get flightId from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const flightId = urlParams.get('flightId');
+
+    // ✅ Form submission handler
+    document.getElementById('bookingForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const fullName = this.fullName.value;
+      const email = this.email.value;
+      const phone = this.phone.value;
+      const seats = this.seats.value;
+
+      // ✅ Store booking in Firestore
+      db.collection("bookings").add({
+        fullName: fullName,
+        email: email,
+        phone: phone,
+        seats: seats,
+        flightId: flightId,
+        timestamp: new Date()
+      })
+      .then(() => {
+        alert("✅ Booking confirmed and saved successfully!");
+        this.reset(); // clear form
+      })
+      .catch((error) => {
+        alert("❌ Error saving booking: " + error.message);
+      });
+    });
+  </script>
+</body>
+</html>
